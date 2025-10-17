@@ -54,6 +54,26 @@
 
 部署成功后，Vercel 会返回生产环境和预览环境的访问链接。
 
+## 重新部署前的本地自检
+
+在多次尝试部署时，先在本地确认代码可以顺利通过构建和静态检查，可以避免 Vercel 队列中的无效构建：
+
+1. **运行 ESLint 检查**：
+   ```bash
+   npm run lint
+   ```
+   确保命令输出 `✔ No ESLint warnings or errors`，表示项目符合配置的代码规范。
+
+2. **执行生产构建**：
+   ```bash
+   npm run build
+   ```
+   观察日志中是否出现 `✓ Compiled successfully`、`✓ Linting and checking validity of types` 等完成提示；若出现错误，可先在本地修复后再提交。
+
+3. **清理历史构建产物（可选）**：若需要重新开始，可删除 `.next/` 目录或运行 `npm run build -- --no-lint` 来定位特定问题，再恢复常规构建流程。
+
+通过以上步骤确认无误后，再推送代码或执行 `vercel --prod`，能够更快得到成功的部署结果。
+
 ## 环境变量配置
 
 如果你的应用需要环境变量：
